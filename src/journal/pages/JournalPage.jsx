@@ -10,7 +10,7 @@ export const JournalPage = () => {
 
     const dispatch = useDispatch();
 
-    const { isSaving, active } = useSelector(state => state.journal)
+    const { isSaving, active, messageSaved } = useSelector(state => state.journal)
 
     const onClickNewNote = () => {
         dispatch(startNewNote())
@@ -20,7 +20,7 @@ export const JournalPage = () => {
         <JournalLayout>
             {
                 (!!active)
-                    ? <NoteView note={active}/>
+                    ? <NoteView note={active} messageSaved={messageSaved} isSaving={isSaving}/>
                     : <NothingSelectedView />
             }
             <IconButton
