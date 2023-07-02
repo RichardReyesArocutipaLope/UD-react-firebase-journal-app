@@ -1,8 +1,19 @@
 import { SaveOutlined } from "@mui/icons-material"
 import { Button, Grid, TextField, Typography } from "@mui/material"
 import { ImageGallery } from "../components/ImageGallery"
+import { useForm } from "../../hooks/useForm"
+import { useMemo } from "react"
 
-export const NoteView = () => {
+export const NoteView = ({ note }) => {
+
+    const { body, title, date, onInputChange, formState } = useForm(note)
+
+
+    const dateString = useMemo(() => {
+        const newDate = new Date(date)
+        return newDate.toUTCString()
+    }, [date])
+
     return (
         <>
             <Grid
@@ -13,7 +24,7 @@ export const NoteView = () => {
             >
                 <Grid item>
                     <Typography fontSize={39} fontWeight={'light'}>
-                        28 de agosto, 2023
+                        {dateString}
                     </Typography>
                 </Grid>
 
@@ -24,13 +35,25 @@ export const NoteView = () => {
                 </Grid>
 
                 <Grid container>
-                    <TextField type="text" variant="filled"
-                        fullWidth placeholder="Ingrese un titulo" label='Título'
+                    <TextField
+                        type="text"
+                        variant="filled" fullWidth
+                        placeholder="Ingrese un titulo"
+                        label='Título'
                         sx={{ border: 'none', mb: 1 }}
+                        name="title"
+                        value={title}
+                        onChange={onInputChange}
                     />
-                    <TextField type="text" variant="filled"
-                        fullWidth multiline placeholder="¿Que sucedio hoy?"
+                    <TextField
+                        type="text"
+                        variant="filled"
+                        fullWidth multiline
+                        placeholder="¿Que sucedio hoy?"
                         minRows={5}
+                        name="body"
+                        value={body}
+                        onChange={onInputChange}
                     />
                 </Grid>
 
